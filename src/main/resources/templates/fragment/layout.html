@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div th:fragment="links">
+        <link rel="icon" type="image/svg+xml" th:href="@{img/logoImg.svg}" sizes="any">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </div>
+</head>
+<body>
+
+    <div class="nav" th:fragment="navbar">
+        <!--<h1>[[${#httpServletRequest.requestURI}]]</h1>-->
+
+        <div class="divImgNav"><a class="noLink" th:href="@{/}"><img class="imgNav" th:src="@{img/avengers.jfif}"/></a></div>
+        <ul class="ulNav">
+            <li th:class="${#httpServletRequest.requestURI == '/' ? 'liNavActive':'liNav'}"><a th:class="${#httpServletRequest.requestURI == '/' ? 'noLinkActive':'noLink'}" th:href="@{/}">Inicio</a></li>
+            <li th:class="${#httpServletRequest.requestURI == '/peliculas' ||  #httpServletRequest.requestURI == '/peliculaE'? 'liNavActive':'liNav'}"><a th:class="${#httpServletRequest.requestURI == '/peliculas' ||  #httpServletRequest.requestURI == '/peliculaE'? 'noLinkActive':'noLink'}" th:href="@{/peliculas}">Peliculas</a></li>
+            <li th:class="${#httpServletRequest.requestURI == '/series' ||  #httpServletRequest.requestURI == '/serieE'? 'liNavActive':'liNav'}"><a th:class="${#httpServletRequest.requestURI == '/series' ||  #httpServletRequest.requestURI == '/serieE'? 'noLinkActive':'noLink'}" th:href="@{/series}">Series</a></li>
+            <li th:class="liNav" id="modalIdSesion" sec:authorize="!isAuthenticated()">Iniciar sesión</li>
+            <li th:class="${#httpServletRequest.requestURI == '/verMas' ? 'liNavActive':'liNav'}"><a th:class="${#httpServletRequest.requestURI == '/verMas'? 'noLinkActive':'noLink'}" th:href="@{/verMas}" sec:authorize="isAuthenticated()">Ver más tarde</a></li>
+            <li class="liNav" sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="POST" >
+                    <input type="submit" value="Log out" class="inputliNav">
+                </form>
+
+            </li>
+        </ul>
+        <div>
+            <div th:if="${succes!= null}" th:text="${succes}"></div>
+            <div th:if="${error!= null}" th:text="${error}"></div>
+        </div>
+    </div>
+    <!--MODAL INICIAR SESIÓN-->
+    <div class="containerModalSesion" id="containerModalSesion" th:fragment="modalSesion">
+        <div class="modalSesion" id="modalSesion">
+            <div class="modalSesionImg" >
+                <img th:src="@{img/logoImg.svg}">
+            </div>
+            <div class="modalSesionForm">
+                <form th:action="@{/login}" method="POST">
+                    <div class="divForm">
+
+                        <input type="text" name="username">
+                        <label class="labelModalsesion">Usuario</label>
+                    </div>
+                    <div class="divForm">
+
+                        <input type="password" name="password" >
+                        <label class="labelModalsesion">Contraseña</label>
+                    </div>
+
+                    <input type="submit" class="btnEnv" value="Iniciar">
+                </form>
+                <a class="btnRegistro" id="linkRegistro">Registrarse</a>
+            </div>
+        </div>  
+        <!--MODAL REGISTRO-->
+        <div class="modalRegistro" id="modalRegistro">
+            <div class="modalRegistroForm">
+                <form th:action="@{/registrar}" method="POST">
+                    <div class="divFormR">
+                        <input type="text" name="name">
+                        <label class="labelModalR">Usuario</label>
+                    </div>
+                    <div class="divFormR">
+
+                        <input type="password" name="pass" >
+                        <label class="labelModalR">Contraseña</label>
+                    </div>
+                    <input type="hidden" th:value="${#httpServletRequest.requestURI}" name="url">
+                    <input type="submit" class="btnEnvR" value="Registrarse">
+                </form>
+                <a class="btnRegistro" id="linkIniciar">Iniciar Sesion</a>
+            </div>
+        </div>  
+        <!--MODAL REGISTRO-->
+    </div>
+    <!--MODAL INICIAR SESIÓN-->
+
+    <!--NOTIFICACION-->
+    <div class="container-notificacion" id="container-notificacion" th:if="${registro != null}" th:fragment="notificacion">
+        <div class="notificacionSucces" id="notificacion">
+            <div class="cerrarbtn" id="cerrarbtn"><i class="far fa-times-circle"></i></div>
+            <h1 th:text="${registro}"></h1>
+        </div>
+    </div>
+    <!--NOTIFICACION-->
+
+    <div th:fragment="scripts">
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+        <script th:src="@{js/Modal.js}"></script>
+        <script th:src="@{js/EliminarMovie.js}"></script>
+    </div>
+    <div th:fragment="sliderJs">
+        <script th:src="@{js/slider.js}"></script>
+    </div>
+</body>
+</html>

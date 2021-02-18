@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--LINKS-->
+    <div th:replace="fragment/layout :: links"></div>
+    <link rel="stylesheet" th:href="@{css/IndexCss.css}">
+</head>
+<body>
+    <div th:replace="fragment/layout :: navbar"></div>
+    <h1 th:text="${usuarioVer.galeria.idGaleria}"></h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Sinopsis</th>
+                <th scope="col">Fecha de lanzamiento</th>
+                <th scope="col">imagen</th>
+                <th scope="col">Trailer</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pelicula : ${usuarioVer.galeria.listarPeliculas}">
+                <td th:text="${pelicula.idPelicula.idPelicula}"></td>
+                <td th:text="${pelicula.idPelicula.nombrePelicula}"></td>
+                <td th:text="${pelicula.idPelicula.descripcion}"></td>
+                <td th:text="${pelicula.idPelicula.sinopsis}"></td>
+                <td th:text="${pelicula.idPelicula.fecha}"></td>
+                <td><img class="imgVerMas" th:src="@{img/}+${pelicula.idPelicula.rutaImg}"></td>
+                <td><iframe th:src="${pelicula.idPelicula.trailer}" allowfullscreen ></iframe></td>
+                <td th:text="${pelicula.idPelicula.categoria}"></td>
+                <td>
+                    <input type="hidden" th:value="${pelicula.idPelicula.idPelicula}" class="valorIdP">
+                    <a class="btnDelete deleteGaleria" id="deleteGaleria">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!--NOTIFICACIONES-->
+    <div th:replace="fragment/layout :: notificacion"></div>
+    <!--NOTIFICACIONES-->
+    <!--SCRIPTS-->
+    <div th:replace="fragment/layout :: scripts"></div>
+    <div th:replace="fragment/layout :: sliderJs"></div>
+    <script th:src="@{js/DeleteGaleria.js}"></script>
+</body>
+</html>

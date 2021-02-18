@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--LINKS-->
+    <div th:replace="fragment/layout :: links"></div>
+    <link rel="stylesheet" th:href="@{css/IndexCss.css}">
+    <link rel="stylesheet" th:href="@{css/adminCss.css}">
+    <link rel="stylesheet" th:href="@{css/verCss.css}">
+</head>
+<body>
+    <div th:replace="fragment/layout :: navbar"></div>
+    <!--PELICULAS-->
+    <div class="containerVer">
+
+        <div class="peliculaVer">
+            <div class="contieneImgPeliculaver">
+                <img th:src="@{'img/'+${pelicula.rutaImg}}" alt="">
+            </div>
+            <div class="nombreFecha">
+                <h5 th:text="${pelicula.nombrePelicula}"></h5>
+                <h5 th:text="${pelicula.fecha}"></h5>
+                <h5 th:text="${pelicula.descripcion}"></h5>
+                <h5 th:text="${pelicula.sinopsis}"></h5>
+                <a class="btnV btnVol" th:href="@{/reproduccion/}+${pelicula.idPelicula}">Ver más tarde</a>
+                <a class="btnV btnadd" th:href="@{${ruta}}">Volver</a>
+            </div>
+        </div>
+
+        <div class="video">
+            <iframe th:src="${pelicula.trailer}" allowfullscreen ></iframe>
+        </div>
+    </div>
+
+</div>
+<!--PELICULAS-->
+<!--MODALSESION -->
+<div th:replace="fragment/layout :: modalSesion"></div>
+
+<!--MODALSESION-->
+<!--NOTIFICACIONES-->
+<div th:replace="fragment/layout :: notificacion"></div>
+<!--NOTIFICACIONES-->
+<!--SCRIPTS-->
+<div th:replace="fragment/layout :: scripts"></div>
+<div th:replace="fragment/layout :: sliderJs"></div>
+</body>
+</html>

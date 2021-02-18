@@ -1,0 +1,59 @@
+.containerVer{
+    width: 100%;
+}
+.peliculaVer{
+    border: 1px solid green;
+    width: 100%;
+    display: flex;
+}
+.contieneImgPeliculaver{
+    padding: 10px;
+    width: 40%;
+}
+.contieneImgPeliculaver img{
+    max-width: 100%;
+    height: 400px;
+}
+.nombreFecha{
+    padding: 20px 0px 0px 10px;
+
+}
+.video{
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    border: 1px solid red;
+    width: 90%;
+}
+.video iframe{
+    position: absolute;
+    top:0;
+    left: 0;
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+}
+.btnV{
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+}
+.btnVol{
+    border: 1px solid turquoise;
+    color: turquoise;
+}
+.btnVol:hover {
+    background-color: turquoise;
+    color: white;
+}
+.btnadd{
+    border: 1px solid tomato;
+    color: tomato;
+}
+.btnadd:hover {
+    background-color: tomato;
+    color: white;
+}

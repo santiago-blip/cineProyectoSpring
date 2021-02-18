@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--LINKS-->
+    <div th:replace="fragment/layout :: links"></div>
+    <link rel="stylesheet" th:href="@{css/IndexCss.css}">
+</head>
+<body>
+    <div th:replace="fragment/layout :: navbar"></div>
+
+    <!--SLIDER-->
+
+
+    <div class="container-slide">
+        <div id="slider-items">
+            <div class="items">
+                <img th:src="@{img/avengers.jfif}"  alt="">
+            </div>
+            <div class="items">
+                <img th:src="@{img/Springn.png}" alt="">
+            </div>
+            <div class="items">
+                <img th:src="@{img/Spider.jfif}" alt="">
+            </div>
+        </div>
+        <div id="buttonsContainer">
+            <button id="bprev">Atrás</button>
+            <button id="bnext">Siguiente</button>
+        </div>
+    </div>
+    <!--SLIDER-->
+    <hr>
+    <!--PELICULAS-->
+    <div class="container-peliculas">
+        
+        <div class="pelicula" th:each="pelicula : ${peliculas}">
+            <div class="contieneImgPelicula">
+                <img th:src="@{'img/'+${pelicula.rutaImg}}"  alt="">
+            </div>
+            <h5>[[${pelicula.nombrePelicula}]]</h5>
+            <div class="cubrePelicula">
+                <div class="linesBig">
+                <a th:href="@{/ver(idPelicula=${pelicula.idPelicula},ruta=${#httpServletRequest.requestURI})}" class="verCubrePelicula">Reproducir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--PELICULAS-->
+    <!--MODALSESION -->
+    <div th:replace="fragment/layout :: modalSesion"></div>
+    
+    <!--MODALSESION-->
+    <!--NOTIFICACIONES-->
+    <div th:replace="fragment/layout :: notificacion"></div>
+    <!--NOTIFICACIONES-->
+    <!--SCRIPTS-->
+    <div th:replace="fragment/layout :: scripts"></div>
+    <div th:replace="fragment/layout :: sliderJs"></div>
+</body>
+</html>

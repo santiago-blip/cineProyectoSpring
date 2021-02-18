@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--LINKS-->
+    <div th:replace="fragment/layout :: links"></div>
+    <link rel="stylesheet" th:href="@{css/adminCss.css}">
+</head>
+<body>
+    <div th:replace="fragment/layout :: navbar"></div>
+    <!--BTN AGREGAR PELICULAS-->   
+    <a class="btnAdd" id="addPelicula" sec:authorize="hasRole('ROLE_ADMIN') && isAuthenticated()">Añadir pelicula</a>
+    <!--BTN AGREGAR PELICULAS-->   
+
+    <!--PELICULAS-->   
+    <div class="container-peliculas">
+
+        <div class="pelicula" th:each="pelicula : ${peliculas}">
+            <div class="contieneImgPelicula">
+                <img th:src="@{'img/'+${pelicula.rutaImg}}" alt="">
+                <div class="cubrePelicula">
+                    <p>fecha: [[${pelicula.fecha}]]</p>
+                    <a th:href="@{/peliculaE(id=${pelicula.idPelicula})}" class="verCubrePelicula btnEdit" sec:authorize="hasRole('ROLE_ADMIN') && isAuthenticated()">Editar</a><!--sec:authorize="hasRole('ROLE_ADMIN') && isAuthenticated()"-->
+                    <input type="hidden" class="idMovie" th:value="${pelicula.idPelicula}">
+                    <a  class="verCubrePelicula btndetelete btndelete" id="btndelete"  sec:authorize="hasRole('ROLE_ADMIN') && isAuthenticated()">Eliminar</a><!--sec:authorize="hasRole('ROLE_ADMIN') && isAuthenticated()"-->
+                    <a th:href="@{/ver(idPelicula=${pelicula.idPelicula},ruta=${#httpServletRequest.requestURI})}" class="verCubrePelicula btnEdit">Reproducir</a>
+                    <!--th:onclick="'javascript:clickMe(\''+${pelicula.idPelicula}+'\')'"-->
+                </div>
+            </div>
+            <div>
+                <h5>[[${pelicula.nombrePelicula}]]</h5>
+            </div>
+        </div>
+    </div>
+
+    <!--PELICULAS-->   
+
+    <!--MODAL AGREGAR-->   
+
+    <div th:class="${#httpServletRequest.requestURI == '/peliculaE'? 'container-modal contenedorModalAddVisible':'container-modal'}" id="container-modal">
+
+        <div th:class="${#httpServletRequest.requestURI == '/peliculaE'? 'modalAdd modalAddVisible':'modalAdd'}" id="modalAdd">
+            <form th:object="${pelicula}" enctype="multipart/form-data" th:action="@{/peliculas}" method="POST">
+                <input type="hidden" th:field="*{idPelicula}">
+                <div class="divFormP">
+                    <label>Nombre</label>
+                    <input type="text" th:field="*{nombrePelicula}">
+                </div>
+                <div class="divFormP">
+                    <label>Descripcion</label>
+                    <textarea th:field="*{descripcion}"></textarea>
+                </div>
+                <div class="divFormP">
+                    <label>Sinopsis</label>
+                    <textarea th:field="*{sinopsis}"></textarea>
+                </div>
+                <div class="divFormP">
+                    <label>Fecha de estreno</label>
+                    <input type="date" th:field="*{fecha}">
+                </div>
+                <div class="divFormP">
+                    <label>Imagen</label>
+                    <input type="file" name="file">
+                </div>
+                <div class="divFormP">
+                    <label>Trailer</label>
+                    <input type="text" th:field="*{trailer}">
+                </div>
+                <div class="divFormP divFormCat">
+                    <label>Categoria</label>
+                    <div>   
+                        <label>Pelicula</label>
+                        <input type="radio" value="Pelicula" name="categoria" th:field="*{categoria}">
+                        <label>Serie</label>
+                        <input type="radio" value="Serie" name="categoria" th:field="*{categoria}">
+                    </div>
+                </div>
+                <input type="hidden" th:value="${#httpServletRequest.requestURI}" name="url">
+                <input type="submit" value="Enviar" class="btnEnv">
+            </form>
+        </div>
+    </div>
+
+    <!--MODAL AGREGAR-->   
+
+    <!--MODAL SESION-->
+    <div th:replace="fragment/layout :: modalSesion"></div>
+    <!--MODAL SESION-->   
+
+    <!--NOTIFICACIONES-->
+    <div th:replace="fragment/layout :: notificacion"></div>
+    <!--NOTIFICACIONES-->
+    <!--SCRIPTS-->
+    <div th:replace="fragment/layout :: scripts"></div>
+</body>
+</html>
